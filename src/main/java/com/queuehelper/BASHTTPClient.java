@@ -23,31 +23,23 @@
 	 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	 */
 	package com.queuehelper;
-	import com.google.protobuf.StringValue;
-	import jdk.internal.org.jline.utils.InputStreamReader;
 	import okhttp3.FormBody;
-
-
 	import java.time.ZoneOffset;
 	import java.time.ZonedDateTime;
 	import java.time.format.DateTimeFormatter;
 	import java.util.List;
 	import java.util.ArrayList;
-
 	import java.io.IOException;
 	import java.awt.image.BufferedImage;
-
 	import net.runelite.api.events.ChatMessage;
 	import net.runelite.client.ui.NavigationButton;
 	import net.runelite.client.util.ImageUtil;
-
 	import okhttp3.Call;
 	import okhttp3.Callback;
 	import okhttp3.HttpUrl;
 	import okhttp3.OkHttpClient;
 	import okhttp3.Request;
 	import okhttp3.Response;
-
 
 	/**
 	 This Class handles all IO communication to the backend
