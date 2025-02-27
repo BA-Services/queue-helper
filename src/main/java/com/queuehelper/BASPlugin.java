@@ -25,24 +25,24 @@
 package com.queuehelper;
 
 
-import com.google.common.collect.ImmutableList;
+
 import com.google.inject.Provides;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.time.Instant;
+
 import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 
-import lombok.Getter;
+
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.events.*;
+import net.runelite.api.widgets.InterfaceID;
 import net.runelite.api.widgets.Widget;
-import net.runelite.api.widgets.WidgetID;
-import net.runelite.api.widgets.WidgetInfo;
+
 import net.runelite.client.chat.ChatColorType;
 import net.runelite.client.chat.ChatMessageBuilder;
 import net.runelite.client.chat.ChatMessageManager;
@@ -76,10 +76,6 @@ public class BASPlugin extends Plugin implements ActionListener {
 	public float fontSize;
 
 	private boolean msgIn = false;
-
-	private static final String KICK_OPTION = "Kick";
-	private static final ImmutableList<String> BEFORE_OPTIONS = ImmutableList.of("Add friend", "Remove friend", KICK_OPTION);
-	private static final ImmutableList<String> AFTER_OPTIONS = ImmutableList.of("Message");
 
 	private BASHTTPClient httpclient;
 
@@ -123,23 +119,11 @@ public class BASPlugin extends Plugin implements ActionListener {
 			SwingUtilities.invokeLater(() -> basQueuePanel.populate(queue.getQueue()));
 			this.fontSize = config.fontSize();
 
-/*
-				this.queue.sendRoundMsd("leader","coll", "healer", "leech",
-						"defender", 900, "0", "torso"
-						,3232, 222, 123, 3232, 2132, 12, 2222,"Collector");*/
-
-
-
 		}
 	}
 
 	private int inGameBit = 0;
 	private String currentWave = START_WAVE;
-
-	@Getter
-	private Round currentRound;
-
-
 
 	protected void shutDown() throws Exception {
 		clientToolbar.removeNavigation(navButton);
@@ -430,7 +414,7 @@ public class BASPlugin extends Plugin implements ActionListener {
 	{
 		switch (event.getGroupId())
 		{
-			case WidgetID.BA_TEAM_GROUP_ID: {
+			case InterfaceID.BA_TEAM: {
 				scanning = true;
 				leech = false;
 			}
@@ -440,10 +424,10 @@ public class BASPlugin extends Plugin implements ActionListener {
 			case 158: {//this is to set scanning true when scroll is used on someone
 				scanning = true;
 			}
-			case WidgetID.BA_REWARD_GROUP_ID:
+			case InterfaceID.BA_REWARD:
 			{
-				Widget rewardWidget = client.getWidget(WidgetInfo.BA_REWARD_TEXT);
-				Widget pointsWidget = client.getWidget(WidgetID.BA_REWARD_GROUP_ID, 14); //RUNNERS_PASSED
+				Widget rewardWidget = client.getWidget(InterfaceID.BA_REWARD);
+				Widget pointsWidget = client.getWidget(InterfaceID.BA_REWARD, 14); //RUNNERS_PASSED
 
 				// Wave 10 ended
 				if (rewardWidget != null && rewardWidget.getText().contains(ENDGAME_REWARD_NEEDLE_TEXT) && gameTime != null)
@@ -504,17 +488,17 @@ public class BASPlugin extends Plugin implements ActionListener {
 				}
 
 				// Wave 1-9 ended
-				else if (pointsWidget != null && client.getVar(Varbits.IN_GAME_BA) == 0)
+				else if (pointsWidget != null && client.getVarbitValue(Varbits.IN_GAME_BA) == 0)
 				{
 					int wavePoints_Attacker, wavePoints_Defender, wavePoints_Healer, wavePoints_Collector, waveEggsCollected, waveHPReplenished, waveFailedAttacks;
 
-					wavePoints_Attacker = wavePoints_Defender = wavePoints_Healer = wavePoints_Collector = Integer.parseInt(client.getWidget(WidgetID.BA_REWARD_GROUP_ID, childIDsOfPointsWidgets[0]).getText()); //set base pts to all roles
+					wavePoints_Attacker = wavePoints_Defender = wavePoints_Healer = wavePoints_Collector = Integer.parseInt(client.getWidget(InterfaceID.BA_REWARD, childIDsOfPointsWidgets[0]).getText()); //set base pts to all roles
 					waveEggsCollected = waveHPReplenished = waveFailedAttacks = 0;
 
 					// Gather post-wave info from points widget
 					for (int i = 0; i < childIDsOfPointsWidgets.length; i++)
 					{
-						int value = Integer.parseInt(client.getWidget(WidgetID.BA_REWARD_GROUP_ID, childIDsOfPointsWidgets[i]).getText());
+						int value = Integer.parseInt(client.getWidget(InterfaceID.BA_REWARD, childIDsOfPointsWidgets[i]).getText());
 
 						switch (i)
 						{
