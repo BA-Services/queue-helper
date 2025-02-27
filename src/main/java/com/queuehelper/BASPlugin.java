@@ -478,7 +478,7 @@ public class BASPlugin extends Plugin implements ActionListener {
 					System.out.print("Healer identified as: "+ player2.getText()+"\n");
 					System.out.print("Defender identified as: "+ player4.getText()+"\n");
 					System.out.print("Attacker identified as: "+ leader.getText()+"\n");
-					System.out.print("Collecter identified as: "+ player1.getText()+"\n");*/
+					System.out.print("Collecter identified as: "+ player1.getText()+"\n");
 
 					//TODO please don't forget to change this back to actually check instead of just true (leech && isRank())
 					if(leech && isRank()) {

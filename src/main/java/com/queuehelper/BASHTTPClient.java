@@ -163,7 +163,7 @@
 			this.OptionQuery = paths[12];
 			this.CustomerNameQuery = paths[13];
 			this.basephp = paths[14];
-			this.CustIDQuery = paths[15];
+			//this.CustIDQuery = paths[15];
 
 
 		}
@@ -358,7 +358,7 @@
 					.add("entry.1794472797", custName)
 					.add("entry.1391010025", itemName)
 					.add("entry.1284888696", addedBy)
-					.add("entry.1260617128", formsource)
+					.add("entry.1260617128", RetrieveCSVQuery)
 					.build();
 
 			// Create a POST request to the Google Form.
@@ -373,7 +373,6 @@
 				return response.isSuccessful();
 			}
 		}
-		private static final String formsource = "BASPlugin";
 
 		@Override
 		public boolean sendChatMsgDiscord(ChatMessage chatmessage) throws IOException
