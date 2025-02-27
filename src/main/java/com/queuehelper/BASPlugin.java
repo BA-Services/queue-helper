@@ -122,6 +122,14 @@ public class BASPlugin extends Plugin implements ActionListener {
 			clientToolbar.addNavigation(navButton);
 			SwingUtilities.invokeLater(() -> basQueuePanel.populate(queue.getQueue()));
 			this.fontSize = config.fontSize();
+
+/*
+				this.queue.sendRoundMsd("leader","coll", "healer", "leech",
+						"defender", 900, "0", "torso"
+						,3232, 222, 123, 3232, 2132, 12, 2222,"Collector");*/
+
+
+
 		}
 	}
 
@@ -452,12 +460,13 @@ public class BASPlugin extends Plugin implements ActionListener {
 							.append(System.getProperty("line.separator"))
 							.append(totalEggsCollected + " eggs collected, " + totalHealthReplenished + "HP vialed and " + totalIncorrectAttacks + " wrong attacks.");
 
-					String leechRole = IDfinder(player3.getModelId());
+					String leechRole = IDfinder(client.getWidget(BaRoleWidget,player3iconID).getModelId());
+
 					int finalPointsAttacker = pointsAttacker + 80;
 					int finalPointsHealer = pointsHealer + 80;
 					int finalPointsDefender = pointsDefender + 80;
 					int finalPointsCollector = pointsCollector + 80;
-					System.out.print("Total Points attacker this wave: "+ finalPointsAttacker+"\n");
+          
 					System.out.print("Total Points healer this wave: "+ finalPointsHealer+"\n");
 					System.out.print("Total Points defender this wave: "+ finalPointsDefender+"\n");
 					System.out.print("Total Points coll this wave: "+ finalPointsCollector+"\n");
@@ -465,14 +474,15 @@ public class BASPlugin extends Plugin implements ActionListener {
 					System.out.print("Total HP rep coll this wave: "+ totalHealthReplenished+"\n");
 					System.out.print("Total Points lost as att this wave: "+ totalIncorrectAttacks+"\n");
 					System.out.print("Total eggs coll picked up this wave: "+ totalEggsCollected+"\n");
-
-					System.out.print("Healer identified as: "+ totalEggsCollected+"\n");
-					System.out.print("Defender identified as: "+ totalEggsCollected+"\n");
-					System.out.print("Attacker identified as: "+ totalEggsCollected+"\n");
-					System.out.print("Collecter identified as: "+ totalEggsCollected+"\n");
+          
+					System.out.print("Healer identified as: "+ player2.getText()+"\n");
+					System.out.print("Defender identified as: "+ player4.getText()+"\n");
+					System.out.print("Attacker identified as: "+ leader.getText()+"\n");
+					System.out.print("Collecter identified as: "+ player1.getText()+"\n");*/
 
 					//TODO please don't forget to change this back to actually check instead of just true (leech && isRank())
-					if(true) {
+					if(leech && isRank()) {
+
 						if (queue.doesCustExist(player3.getText())) {
 							this.queue.sendRoundMsd(leader.getText(), player1.getText(), player2.getText(), player3.getText(),
 									player4.getText(), gameTime.getPBTime(), queue.getCustomer(player3.getText()).getPriority(), queue.getCustomer(player3.getText()).getItem()
@@ -545,15 +555,6 @@ public class BASPlugin extends Plugin implements ActionListener {
 					pointsHealer += wavePoints_Healer;
 					pointsDefender += wavePoints_Defender;
 					pointsAttacker += wavePoints_Attacker;
-					System.out.print("Points collected this wave: "+ wavePoints_Collector+"\n");
-					System.out.print("Points healer this wave: "+ wavePoints_Healer+"\n");
-					System.out.print("Points defender this wave: "+ wavePoints_Defender+"\n");
-					System.out.print("Points attacker this wave: "+ wavePoints_Attacker+"\n");
-					System.out.print("Healer identified as: "+ totalEggsCollected+"\n");
-					System.out.print("Defender identified as: "+ totalEggsCollected+"\n");
-					System.out.print("Attacker identified as: "+ totalEggsCollected+"\n");
-					System.out.print("Collecter identified as: "+ totalEggsCollected+"\n");
-					//TODO HERE
 				}
 
 				break;
