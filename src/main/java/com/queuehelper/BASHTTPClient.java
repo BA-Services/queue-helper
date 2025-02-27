@@ -221,7 +221,7 @@
 				}
 
 				@Override
-				public void onResponse(Call call, Response response) throws IOException { System.out.print(response.body().string()); }
+				public void onResponse(Call call, Response response) throws IOException { String eat =(response.body().string()); }
 			});
 			return true;
 
@@ -269,7 +269,7 @@
 				}
 
 				@Override
-				public void onResponse(Call call, Response response) throws IOException { System.out.print(response.body().string()+"\n"); }
+				public void onResponse(Call call, Response response) throws IOException { String eat = (response.body().string()+"\n"); }
 			});
 			return true;
 		}
@@ -301,7 +301,6 @@
 				@Override
 				public void onResponse(Call call, Response response) throws IOException {
 					String data = response.body().string().split("body\": \"")[1].replace("}","");
-					//System.out.print(data);
 					 csvData = new ArrayList<>();
 					String[] lines = data.split("\\\\r\\\\n");
 
@@ -310,20 +309,11 @@
 						csvData.add(values);
 					}
 					response.close();
-					/*for(String[] blah: csvData){
-						for(String blahs: blah){
-							System.out.print(blahs + ",");
-						}
-						System.out.print("\n");
-					}*/
-					//System.out.print("\n");
+
 				}
 			});
-			//System.out.print(csvData);
 			return csvData;//by way of how the enqueue/callback works this is always 1 refresh behind.... not the end of the world but annoying
 		}
-
-
 
 
 		@Override//TODO make this work(L0l)

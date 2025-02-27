@@ -43,6 +43,7 @@ import net.runelite.api.events.*;
 import net.runelite.api.widgets.InterfaceID;
 import net.runelite.api.widgets.Widget;
 
+import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.chat.ChatColorType;
 import net.runelite.client.chat.ChatMessageBuilder;
 import net.runelite.client.chat.ChatMessageManager;
@@ -206,7 +207,7 @@ public class BASPlugin extends Plugin implements ActionListener {
 		if (client.getLocalPlayer().getName() != null) {
 			name = Text.sanitize(client.getLocalPlayer().getName());
 		}
-		//System.out.print(csv.toString() + '\n');
+
 		queue.updateQueuebackend(csv, name);
 	}
 
@@ -347,7 +348,7 @@ public class BASPlugin extends Plugin implements ActionListener {
 	//used in BasQueueRow to run the right click options
 	public void markCustomer(int option, Customer cust)
 	{
-		System.out.print("Attempted to mark: " + cust.getName()+"\n");
+
 		int UNSUPORRTED = 0;
 		if(option != UNSUPORRTED)
 		{
@@ -410,23 +411,28 @@ public class BASPlugin extends Plugin implements ActionListener {
 	final int[] childIDsOfPointsWidgets = new int[]{33, 32, 25, 26, 24, 28, 31, 27, 29, 30, 21, 22, 19};
 
 	@Subscribe
-	public void onWidgetLoaded(WidgetLoaded event) throws IOException//exception required to run .flush()
+	public void onWidgetLoaded(WidgetLoaded event)
 	{
 		switch (event.getGroupId())
 		{
 			case InterfaceID.BA_TEAM: {
 				scanning = true;
 				leech = false;
+				break;
 			}
 			case 159: {//this is to set scanning true when scroll is used on someone
 				scanning = true;
+				break;
 			}
 			case 158: {//this is to set scanning true when scroll is used on someone
 				scanning = true;
+				break;
 			}
 			case InterfaceID.BA_REWARD:
 			{
-				Widget rewardWidget = client.getWidget(InterfaceID.BA_REWARD);
+
+				Widget rewardWidget = client.getWidget(InterfaceID.BA_REWARD,57);
+
 				Widget pointsWidget = client.getWidget(InterfaceID.BA_REWARD, 14); //RUNNERS_PASSED
 
 				// Wave 10 ended
@@ -444,25 +450,12 @@ public class BASPlugin extends Plugin implements ActionListener {
 							.append(System.getProperty("line.separator"))
 							.append(totalEggsCollected + " eggs collected, " + totalHealthReplenished + "HP vialed and " + totalIncorrectAttacks + " wrong attacks.");
 
-					String leechRole = IDfinder(client.getWidget(BaRoleWidget,player3iconID).getModelId());
-
 					int finalPointsAttacker = pointsAttacker + 80;
 					int finalPointsHealer = pointsHealer + 80;
 					int finalPointsDefender = pointsDefender + 80;
 					int finalPointsCollector = pointsCollector + 80;
           
-					System.out.print("Total Points healer this wave: "+ finalPointsHealer+"\n");
-					System.out.print("Total Points defender this wave: "+ finalPointsDefender+"\n");
-					System.out.print("Total Points coll this wave: "+ finalPointsCollector+"\n");
-					System.out.print("game time:"+gameTime.getPBTime()+"\n");
-					System.out.print("Total HP rep coll this wave: "+ totalHealthReplenished+"\n");
-					System.out.print("Total Points lost as att this wave: "+ totalIncorrectAttacks+"\n");
-					System.out.print("Total eggs coll picked up this wave: "+ totalEggsCollected+"\n");
-          
-					System.out.print("Healer identified as: "+ player2.getText()+"\n");
-					System.out.print("Defender identified as: "+ player4.getText()+"\n");
-					System.out.print("Attacker identified as: "+ leader.getText()+"\n");
-					System.out.print("Collecter identified as: "+ player1.getText()+"\n");
+
 
 					//TODO please don't forget to change this back to actually check instead of just true (leech && isRank())
 					if(leech && isRank()) {
@@ -547,6 +540,8 @@ public class BASPlugin extends Plugin implements ActionListener {
 
 		}
 	}
+
+	String leechRole;
 	@Subscribe
 	public void onGameTick(GameTick event)
 	{
@@ -572,13 +567,13 @@ public class BASPlugin extends Plugin implements ActionListener {
 				log.debug("Player2 is {}", player2.getText());
 				log.debug("Player3 is {}", player3.getText());
 				log.debug("Player4 is {}", player4.getText());
+				leechRole = IDfinder(client.getWidget(BaRoleWidget,player3iconID).getModelId());
 				scanning = false;
 
 
                     for (int i = 8; i < 13; i++)
 				{
 					String player_in_list = (client.getWidget(BaRoleWidget, i).getText());
-					String playerRole = IDfinder(client.getWidget(BaRoleWidget, (i + 10)).getModelId());
 					if (player.compareTo(player_in_list) == 0)//future developers it grabs the name from the string used in this comparison
 					{
 						//this checks which location the name is in the scroll
