@@ -43,7 +43,6 @@ import net.runelite.api.events.*;
 import net.runelite.api.widgets.InterfaceID;
 import net.runelite.api.widgets.Widget;
 
-import net.runelite.api.widgets.WidgetInfo;
 import net.runelite.client.chat.ChatColorType;
 import net.runelite.client.chat.ChatMessageBuilder;
 import net.runelite.client.chat.ChatMessageManager;
@@ -58,14 +57,12 @@ import net.runelite.client.ui.NavigationButton;
 import net.runelite.client.util.ImageUtil;
 import net.runelite.client.util.Text;
 import okhttp3.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import java.io.IOException;
+
 @Slf4j
 @PluginDescriptor(name = "BAS Queue Helper", description = "BAS Customer CC Info", tags = {"minigame"})
 public class BASPlugin extends Plugin implements ActionListener {
-	private static final Logger log = LoggerFactory.getLogger(BASPlugin.class);
 
 	private static final String ccName = "Ba Services";
 
@@ -77,8 +74,6 @@ public class BASPlugin extends Plugin implements ActionListener {
 	public float fontSize;
 
 	private boolean msgIn = false;
-
-	private BASHTTPClient httpclient;
 
 	@Inject
 	private Client client;
@@ -123,16 +118,13 @@ public class BASPlugin extends Plugin implements ActionListener {
 		}
 	}
 
-	private int inGameBit = 0;
 	private String currentWave = START_WAVE;
 
 	protected void shutDown() throws Exception {
 		clientToolbar.removeNavigation(navButton);
 		this.queue = null;
-		httpclient = null;
 		gameTime = null;
 		currentWave = START_WAVE;
-		inGameBit = 0;
 	}
 
 
@@ -609,32 +601,3 @@ public class BASPlugin extends Plugin implements ActionListener {
 
 }
 
-
-
-
-
-
-
-
-
-
-/*Widget rewardWidget = client.getWidget(WidgetInfo.BA_REWARD_TEXT);
-
-				if (rewardWidget != null && rewardWidget.getText().contains(ENDGAME_REWARD_NEEDLE_TEXT) && gameTime != null && leech && isRank())
-				{
-
-					if(queue.doesCustExist(player3.getText()))
-					{
-						this.queue.sendRoundMsd(leader.getText(), player1.getText(), player2.getText(), player3.getText(), player4.getText(), gameTime.getPBTime(), queue.getCustomer(player3.getText()).getPriority(), queue.getCustomer(player3.getText()).getItem());
-
-					}
-					else
-					{
-						this.queue.sendRoundMsd(leader.getText(), player1.getText(), player2.getText(), player3.getText(), player4.getText(), gameTime.getPBTime(), "Unknown", "Unknown");
-
-					}
-					gameTime = null;
-					leech = false;
-				}
-
-				break;*/

@@ -30,10 +30,7 @@
 	import java.util.List;
 	import java.util.ArrayList;
 	import java.io.IOException;
-	import java.awt.image.BufferedImage;
 	import net.runelite.api.events.ChatMessage;
-	import net.runelite.client.ui.NavigationButton;
-	import net.runelite.client.util.ImageUtil;
 	import okhttp3.Call;
 	import okhttp3.Callback;
 	import okhttp3.HttpUrl;
@@ -57,23 +54,9 @@
 
 		private OkHttpClient Basclient;
 
-		private String CustIDQuery;
 		private List<String[]> csvData;
 		private String RetrieveCSVQuery;
-		private String UPDATE_OPTION_GNC;
-		private String UPDATE_OPTION_ATQ;
-		private String UPDATE_OPTION_PRI;
-		private String UPDATE_OPTION_NAM;
-		private String UPDATE_OPTION_FORMI;
-		private String UPDATE_OPTION_QN;
-		private String csvList;
-		private String UPDATE_OPTION_QHN;
-		private String UPDATE_OPTION_C;
-		private String UPDATE_OPTION_M;
-		private String UPDATE_OPTION_R;
-		private String OptionQuery;
-		private String CustomerNameQuery;
-		private String basephp;
+
 
 
 
@@ -108,55 +91,10 @@
 
 			csvData = null;
 
-			UPDATE_OPTION_GNC = "";
-
-			UPDATE_OPTION_ATQ = "";
-
-			UPDATE_OPTION_PRI = "";
-
-			UPDATE_OPTION_NAM = "";
-
-			UPDATE_OPTION_FORMI = "";
-
-			UPDATE_OPTION_QN = "";
-
-			csvList = "";
-
-			UPDATE_OPTION_QHN = "";
-
-			UPDATE_OPTION_C = "";
-
-			UPDATE_OPTION_M = "";
-
-			UPDATE_OPTION_R = "";
-
-			OptionQuery = "";
-
-			CustomerNameQuery = "";
-
-			basephp = "";
-
-			CustIDQuery = "";
 		}
 
 		private void updateFilePaths(String[] paths){
 			this.RetrieveCSVQuery = paths[0];
-			this.UPDATE_OPTION_GNC = paths[1];
-			this.UPDATE_OPTION_ATQ = paths[2];
-			this.UPDATE_OPTION_PRI = paths[3];
-			this.UPDATE_OPTION_NAM = paths[4];
-			this.UPDATE_OPTION_FORMI = paths[5];
-			this.UPDATE_OPTION_QN = paths[6];
-			this.csvList = paths[7];
-			this.UPDATE_OPTION_QHN = paths[8];
-			this.UPDATE_OPTION_C = paths[9];
-			this.UPDATE_OPTION_M = paths[10];
-			this.UPDATE_OPTION_R = paths[11];
-			this.OptionQuery = paths[12];
-			this.CustomerNameQuery = paths[13];
-			this.basephp = paths[14];
-			//this.CustIDQuery = paths[15];
-
 
 		}
 
@@ -179,13 +117,7 @@
 				return response.body().string().split("\"")[3].split(",");
 			}
 		}
-		@Override
-		@Deprecated
-		public String getCustomerID(String name) throws IOException
-		{
-			return "null";//please use another method to get ID this is not useful anymore
 
-		}
 		@Override
 		public boolean markCustomer(int option, String name,String rankName) throws IOException
 		{
@@ -226,23 +158,6 @@
 			return true;
 
 		}
-
-
-
-		@Override
-		public NavigationButton getNavButton()
-		{
-			final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "/panellogo.png");
-
-			NavigationButton navButton = NavigationButton.builder()
-					.tooltip("BAS queue + options")
-					.icon(icon)
-					.priority(2)
-					//.panel(BasQueuePanel)
-					.build();
-			return navButton;
-		}
-
 
 		public boolean updateQueuebackend(StringBuilder urlList, String name) throws IOException {
 			OkHttpClient client = Basclient;

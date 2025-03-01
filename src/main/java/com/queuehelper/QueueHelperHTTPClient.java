@@ -26,9 +26,7 @@ package com.queuehelper;
 
 import java.io.IOException;
 import java.util.List;
-import net.runelite.api.FriendsChatRank;
 import net.runelite.api.events.ChatMessage;
-import net.runelite.client.ui.NavigationButton;
 
 //To create your own implementation, change which implementation is called by the Queue object. To make sure data is
 	//"Correct" look how the queue class handles the IO data especially how it creates the list of customers
@@ -44,13 +42,9 @@ public interface QueueHelperHTTPClient
 
 	void setAPikey(String apikey);
 
-	public String getCustomerID(String name) throws IOException;
-
 	public boolean markCustomer(int option, String name, String rankname) throws IOException;
 
 	public List<String[]> readCSV(List<String[]> csv) throws IOException;//Please pay close attention to how the queue object expects the customer name/id and so forth. A small quirk is it expect cooldown status to be present in the "notes" part of the customer
-
-	public NavigationButton getNavButton();
 
 	public boolean updateQueuebackend(StringBuilder urlList, String name) throws IOException;
 

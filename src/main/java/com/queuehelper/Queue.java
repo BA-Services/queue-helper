@@ -32,9 +32,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.SwingUtilities;
-import net.runelite.api.FriendsChatRank;
 import net.runelite.api.events.ChatMessage;
-import net.runelite.client.ui.NavigationButton;
 import okhttp3.OkHttpClient;
 
 public class Queue
@@ -133,11 +131,6 @@ public class Queue
         }
 	}
 
-	public NavigationButton getNav()
-	{
-		return httpClient.getNavButton(); //return the navigation button from the httpclient implementation allows for alternative nav buttons
-	}
-
 	public LinkedHashMap<String, Customer> getQueue()
 	{
 		return this.CurrentQueue;
@@ -228,27 +221,6 @@ public class Queue
 		{
 			e.printStackTrace();
 		}
-	}
-
-	public void exportCSV() throws IOException {
-		StringBuilder csvBuilder = new StringBuilder();
-		// Optional header row
-		csvBuilder.append("Priority,Customer,Status,ID,Item,Notes\n");
-
-		// Assuming CurrentQueue is declared as, for example:
-		// private LinkedHashMap<String, Customer> CurrentQueue;
-		for (Customer cust : this.CurrentQueue.values()) {
-			csvBuilder.append(cust.getPriority()).append(",")
-					.append(cust.getName()).append(",")
-					.append(cust.getStatus()).append(",")
-					.append(cust.getID()).append(",")
-					.append(cust.getItem()).append(",")
-					.append(cust.getNotes()).append("\n");
-		}
-
-		// Upload the new CSV to S3 using your existing method.
-		// For example:
-		httpClient.updateQueuebackend(csvBuilder, "queue.csv");
 	}
 
 	public void sendRoundMsd(String main, String collector, String healer, String leech, String defender, int time, String premiumType, String item
