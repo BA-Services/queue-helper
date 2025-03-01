@@ -79,7 +79,7 @@ public class Queue
 				updateQueueTask(ShouldUpdate());
 			}
 		};
-		timer.scheduleAtFixedRate(this.updateQueue,new Date(),12000);//Schedules a task every 2minutes to both refresh queue object + upload the cc data -> backend
+		timer.scheduleAtFixedRate(this.updateQueue,new Date(),120000);//Schedules a task every 2minutes to both refresh queue object + upload the cc data -> backend
 	}
 
 	public static Queue getInstance(String apikey, BasQueuePanel BasPanel, BASPlugin basPlugin,OkHttpClient rlhttp) throws IOException //Singleton queue creation should only need one queue per plugin
