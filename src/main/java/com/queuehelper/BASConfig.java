@@ -55,7 +55,7 @@ public interface BASConfig extends Config {
 	@ConfigItem(
 		keyName = "APIKEY",
 		name = "KEY",
-		description = "Please place your api key here",
+		description = "Please place your api key here, Specifying any value here will attempt to authenticate and communicate with a external server that Runelite does not control.",
 		position = 4
 	)
 	default String apikey()

@@ -346,7 +346,7 @@ public class BASPlugin extends Plugin implements ActionListener {
 		{
 			try
 			{
-				queue.mark(option, cust, client.getLocalPlayer().getName());
+				queue.mark(option, cust, config.queueName());
 			}
 			catch (IOException ioException)
 			{
@@ -537,6 +537,15 @@ public class BASPlugin extends Plugin implements ActionListener {
 	@Subscribe
 	public void onGameTick(GameTick event)
 	{
+		if(		client.getLocalPlayer() == null ||
+				client.getWidget(BaRoleWidget, leaderID)==null||
+				client.getWidget(BaRoleWidget, player1ID)==null||
+				client.getWidget(BaRoleWidget, player2ID)==null||
+				client.getWidget(BaRoleWidget, player3ID)==null||
+				client.getWidget(BaRoleWidget, player4ID)==null){
+			return;
+		}
+
 		if(scanning) {
 			final String player;
 			player = client.getLocalPlayer().getName();

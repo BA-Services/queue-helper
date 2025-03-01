@@ -231,7 +231,7 @@
 		}
 
 
-		@Override//TODO make this work(L0l)
+		@Override
 		public boolean addCustomer(String itemName, String priority, String custName, String addedBy) throws IOException
 		{
 			OkHttpClient client = Basclient;
