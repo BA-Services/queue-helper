@@ -65,8 +65,9 @@
 			this.Basclient = basclient;
 			this.apikey = apikey;
 			this.apiBase = new HttpUrl.Builder().scheme("https").host(BASHTTPClient.HOST_PATH).addPathSegment("Bas_Queuehelper").build();
-			String[] pathsArray = this.getFilePaths();
-			this.updateFilePaths(pathsArray);
+			this.getFilePaths();
+			//String[] pathsArray = this.getFilePaths();
+			//this.updateFilePaths(pathsArray);
 		}
 
 		public static BASHTTPClient getInstance(String apikey,OkHttpClient basclient) throws IOException
@@ -93,12 +94,12 @@
 
 		}
 
-		private void updateFilePaths(String[] paths){
+		public void updateFilePaths(String[] paths){
 			this.RetrieveCSVQuery = paths[0];
 
 		}
 
-		private String[] getFilePaths() throws IOException {
+		private void getFilePaths() throws IOException {
 
 			OkHttpClient client = Basclient;
 			HttpUrl url = apiBase.newBuilder()
@@ -112,10 +113,19 @@
 					.header("x-api-key", this.apikey)
 					.build();
 
-			try (Response response = client.newCall(request).execute())
-			{
-				return response.body().string().split("\"")[3].split(",");
-			}
+			Response test;
+			client.newCall(request).enqueue(new Callback() {
+				@Override
+				public void onFailure(Call call, IOException e) {
+
+				}
+
+				@Override
+				public void onResponse(Call call, Response response) throws IOException {
+					updateFilePaths(response.body().string().split("\"")[3].split(","));
+				}
+			});
+
 		}
 
 		@Override
@@ -265,10 +275,18 @@
 					.header("User-Agent", "RuneLite")
 					.build();
 
-			try (Response response = client.newCall(request).execute())
+			client.newCall(request).enqueue(new Callback()
 			{
-				return response.isSuccessful();
-			}
+				@Override
+				public void onFailure(Call call, IOException e)
+				{
+
+				}
+
+				@Override
+				public void onResponse(Call call, Response response) throws IOException { String eat =(response.body().string()); }
+			});
+			return true;
 		}
 
 		@Override

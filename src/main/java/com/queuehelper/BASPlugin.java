@@ -100,7 +100,7 @@ public class BASPlugin extends Plugin implements ActionListener {
 
 	private Queue queue;
 
-	protected void startUp() throws Exception {
+	protected void startUp() throws IOException {
 		if (!isConfigApiEmpty()) {
 			this.basQueuePanel = new BasQueuePanel(this, this.config);
 			this.queue = Queue.getInstance(config.apikey(), basQueuePanel, this, BasHttpClient);
